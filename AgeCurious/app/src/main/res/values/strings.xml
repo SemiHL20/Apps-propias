@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AgeCurious</string>
+    <string name="check_button_text">CHECK</string>
+    <string name="what_s_your_birth_date">Pick your birth date</string>
+    <string name="years_text">Years:</string>
+    <string name="years_hint">Your age in years</string>
+    <string name="months_text">Months:</string>
+    <string name="months_hint">Your age in months</string>
+    <string name="weeks_text">Weeks:</string>
+    <string name="weeks_hint">Your age in weeks</string>
+    <string name="days_text">Days:</string>
+    <string name="days_hint">Your age in days</string>
+    <string name="hours_text">Hours:</string>
+    <string name="hours_hint">Your age in hours</string>
+    <string name="minutes_text">Minutes:</string>
+    <string name="minutes_hint">Your age in minutes</string>
+    <string name="seconds_text">Seconds:</string>
+    <string name="seconds_hint">Your age in seconds</string>
+    <string name="again_button_text">AGAIN</string>
+    <string name="yearsResult_text">Years: %1$s</string>
+</resources>

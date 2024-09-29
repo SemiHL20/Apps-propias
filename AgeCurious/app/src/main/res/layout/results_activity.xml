@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/years_label"
+        style="@style/labels"
+        android:text="@string/years_text"
+        android:layout_marginTop="@dimen/margin_topOfParent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/years_result"
+        style="@style/results"
+        android:hint="@string/years_hint"
+        android:layout_marginTop="@dimen/margin_topOfParent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/months_label"
+        style="@style/labels"
+        android:text="@string/months_text"
+        app:layout_constraintTop_toBottomOf="@id/years_label"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/months_result"
+        style="@style/results"
+        android:hint="@string/months_hint"
+        app:layout_constraintTop_toBottomOf="@id/years_result"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/weeks_label"
+        style="@style/labels"
+        android:text="@string/weeks_text"
+        app:layout_constraintTop_toBottomOf="@id/months_label"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/weeks_result"
+        style="@style/results"
+        android:hint="@string/weeks_hint"
+        app:layout_constraintTop_toBottomOf="@id/months_result"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/days_label"
+        style="@style/labels"
+        android:text="@string/days_text"
+        app:layout_constraintTop_toBottomOf="@id/weeks_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/days_result"
+        style="@style/results"
+        android:hint="@string/days_hint"
+        app:layout_constraintTop_toBottomOf="@id/weeks_result"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/hours_label"
+        style="@style/labels"
+        android:text="@string/hours_text"
+        app:layout_constraintTop_toBottomOf="@id/days_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/hours_result"
+        style="@style/results"
+        android:hint="@string/hours_hint"
+        app:layout_constraintTop_toBottomOf="@id/days_result"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/minutes_label"
+        style="@style/labels"
+        android:text="@string/minutes_text"
+        app:layout_constraintTop_toBottomOf="@id/hours_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/minutes_result"
+        style="@style/results"
+        android:hint="@string/minutes_hint"
+        app:layout_constraintTop_toBottomOf="@id/hours_result"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/seconds_label"
+        style="@style/labels"
+        android:text="@string/seconds_text"
+        app:layout_constraintTop_toBottomOf="@id/minutes_label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/seconds_result"
+        style="@style/results"
+        android:hint="@string/seconds_hint"
+        app:layout_constraintTop_toBottomOf="@id/minutes_result"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/again_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/again_button_text"
+        android:layout_marginTop="@dimen/margin_top"
+        app:layout_constraintTop_toBottomOf="@id/seconds_label"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

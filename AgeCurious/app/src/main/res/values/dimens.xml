@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_top">32dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="horizontal_margin">20dp</dimen>
+    <dimen name="margin_topOfParent">80dp</dimen>
+</resources>
