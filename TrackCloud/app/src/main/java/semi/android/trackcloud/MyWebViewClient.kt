@@ -1,5 +1,6 @@
 package semi.android.trackcloud
 
+import android.content.Intent
 import android.net.Uri
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -13,7 +14,8 @@ class MyWebViewClient : WebViewClient() {
             // Carga la URL en el WebView
             false
         } else {
-            // Do nothing
+            // Abre navegador por defecto (posibilita los anuncios)
+            view.context.startActivity(Intent(Intent.ACTION_VIEW, request.url))
             true
         }
     }
