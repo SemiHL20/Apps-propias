@@ -1,61 +1,88 @@
 package semi.android.trackcloud
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import semi.android.trackcloud.ui.theme.TrackCloudTheme
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var configuration: Configuration
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            moveTaskToBack(true) // Mueve la app a segundo plano
+        }
+    }
+
+    private val webView: WebView by lazy {
+        WebView(this).apply {
+            webViewClient = MyWebViewClient()
+            settings.javaScriptEnabled = true
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        configuration = resources.configuration
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
         setContent {
+            val currentUrl by rememberSaveable {
+                mutableStateOf("https://trackcloud.es/") }
             TrackCloudTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                     innerPadding ->
                         WebScreen(
-                            url = "https://trackcloud.es/",
+                            url = currentUrl,
+                            webView = webView,
                             modifier = Modifier.padding(innerPadding)
                         )
                 }
             }
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("currentUrl", webView.url)
+        webView.saveState(outState)
+        configuration = resources.configuration
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        webView.restoreState(savedInstanceState)
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        onBackPressedCallback.remove()
+        super.onDestroy()
+    }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun WebScreen(url: String, modifier : Modifier = Modifier) {
-    AndroidView(factory = {
-        WebView(it).apply {
-            webViewClient = WebViewClient()
-            settings.javaScriptEnabled = true
-            loadUrl(url)
-        }
-    }, modifier.fillMaxSize()
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TrackCloudTheme {
-        WebScreen(url = "https://trackcloud.es/", modifier = Modifier)
-    }
+fun WebScreen(url: String, webView: WebView, modifier : Modifier = Modifier) {
+    AndroidView(factory = { webView },
+        modifier = modifier.fillMaxSize(), update = {
+            it.loadUrl(url) // Carga la URL en el WebView existente
+        })
 }
