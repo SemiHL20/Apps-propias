@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AgeCurious</string>
     <string name="check_button_text">CHECK</string>
-    <string name="what_s_your_birth_date">Pick your birth date</string>
+    <string name="what_s_your_birth_date">Pick a date to see how much time has passed since then</string>
     <string name="years_text">Years:</string>
     <string name="years_hint">Your age in years</string>
     <string name="months_text">Months:</string>

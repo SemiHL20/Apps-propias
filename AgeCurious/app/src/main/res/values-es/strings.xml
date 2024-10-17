@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AgeCurious</string>
+    <string name="check_button_text">COMPRUEBA</string>
+    <string name="what_s_your_birth_date">Selecciona una fecha para ver cuánto tiempo ha pasado</string>
+    <string name="years_text">Años:</string>
+    <string name="years_hint">Your age in years</string>
+    <string name="months_text">Meses:</string>
+    <string name="months_hint">Your age in months</string>
+    <string name="weeks_text">Semanas:</string>
+    <string name="weeks_hint">Your age in weeks</string>
+    <string name="days_text">Días:</string>
+    <string name="days_hint">Your age in days</string>
+    <string name="hours_text">Horas:</string>
+    <string name="hours_hint">Your age in hours</string>
+    <string name="minutes_text">Minutos:</string>
+    <string name="minutes_hint">Your age in minutes</string>
+    <string name="seconds_text">Segundos:</string>
+    <string name="seconds_hint">Your age in seconds</string>
+    <string name="again_button_text">VOLVER</string>
+    <string name="yearsResult_text">Years: %1$s</string>
+</resources>
