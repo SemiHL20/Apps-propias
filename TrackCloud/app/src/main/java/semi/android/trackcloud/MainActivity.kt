@@ -1,6 +1,10 @@
 package semi.android.trackcloud
 
+import WebAppInterface
 import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.webkit.WebView
@@ -17,7 +21,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
+import semi.android.trackcloud.notifications.NotificationService
 import semi.android.trackcloud.ui.theme.TrackCloudTheme
+import semi.android.trackcloud.web.MyWebViewClient
 
 class MainActivity : ComponentActivity() {
 
@@ -25,20 +31,39 @@ class MainActivity : ComponentActivity() {
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            moveTaskToBack(true) // Mueve la app a segundo plano
+            if (webView.canGoBack()) {
+                webView.goBack()
+            } else {
+                moveTaskToBack(true) // Mueve la app a segundo plano
+            }
         }
+    }
+
+    companion object {
+        var webViewInstance: WebView? = null // Referencia estática del WebView
     }
 
     private val webView: WebView by lazy {
         WebView(this).apply {
             webViewClient = MyWebViewClient()
             settings.javaScriptEnabled = true
+            addJavascriptInterface(WebAppInterface(this@MainActivity), "AndroidBridge")
+
+            settings.domStorageEnabled = true // Habilitar almacenamiento DOM
+            settings.javaScriptCanOpenWindowsAutomatically = true // Permite ventanas emergentes
+            settings.setSupportMultipleWindows(true) // Permite múltiples ventanas
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        webViewInstance = webView // Asignar el WebView a la referencia estática
+
+        Intent(this, NotificationService::class.java).also {
+            startForegroundService(it)
+        }
 
         configuration = resources.configuration
 
@@ -73,16 +98,23 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
-        onBackPressedCallback.remove()
         super.onDestroy()
+        webView.stopLoading()
+        webView.destroy()
+        webViewInstance = null
+        onBackPressedCallback.remove()
+        stopService(Intent(this, NotificationService::class.java))
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(1)
     }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebScreen(url: String, webView: WebView, modifier : Modifier = Modifier) {
-    AndroidView(factory = { webView },
-        modifier = modifier.fillMaxSize(), update = {
-            it.loadUrl(url) // Carga la URL en el WebView existente
-        })
+    AndroidView(
+        factory = { webView },
+        modifier = modifier.fillMaxSize(),
+        update = { it.loadUrl(url) } // Carga la URL en el WebView existente
+    )
 }
